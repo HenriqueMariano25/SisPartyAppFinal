@@ -131,7 +131,7 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
 
   _entrar(data) async {
     try{
-      criarUsuarioCliente(data);
+      criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => EventoListaCliente(),

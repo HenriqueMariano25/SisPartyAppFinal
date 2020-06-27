@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sisparty/http/sessionWebclient.dart';
 import 'package:sisparty/screens/escolher_cadastro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'eventos_cliente.dart';
 import 'login.dart';
 
 class CadastrarFornecedor extends StatefulWidget {
@@ -68,19 +70,14 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
                 ),
                 _buildTextField(
                     "Nome", TextInputType.text, false, _nameController),
-                TextFormField(onSaved: (value) => _email = value,decoration: InputDecoration(
-                    labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.black54, fontSize: 20.0)),),
-                TextFormField(onSaved: (value) => _password = value,decoration: InputDecoration(
-                    labelText: "Senha",
-                    labelStyle: TextStyle(color: Colors.black54, fontSize: 20.0)),
-                  obscureText: true,),
+                _buildTextField(
+                    "Email", TextInputType.text, false, _emailController),
+                _buildTextField(
+                    "Senha", TextInputType.text, true, _passwordController),
                 _buildTextField("Confirmar Senha", TextInputType.text, true,
                     _confirmPasswordController),
                 _buildTextField(
                     "CPF/CNPJ", TextInputType.text, false, _cpfcnpjController),
-                _buildTextField("Data de Nascimento", TextInputType.text, false,
-                    _dateBirthController),
                 _buildTextField(
                     "Endereço", TextInputType.text, false, _addressController),
                 Divider(),
@@ -91,15 +88,17 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
                       if (_formKey.currentState.validate() &&
                           _passwordController.text ==
                               _confirmPasswordController.text) {
-                        _entrar();
-                        Map<String, dynamic> userData = {
-                          "name": _nameController.text,
+                        var userData = {
                           "email": _emailController.text,
-                          "endereco": _addressController.text,
-                          "cpfcnpj": _cpfcnpjController.text,
-                          "nascimento": _dateBirthController.text,
-                          "tipo": "Fornecedor"
+                          "name": _nameController.text,
+                          "password": _passwordController.text,
+                          "password_confirmation":
+                              _confirmPasswordController.text,
+//                          "address": _addressController.text,
+//                          "cpfcnpj": _cpfcnpjController.text,
+                          "type_user": "Fornecedor"
                         };
+                        _entrar(userData);
                       }
                     },
                     color: Colors.pink,
@@ -116,18 +115,15 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
       ),
     );
   }
-  _entrar() async{
-    _formKey.currentState.save();
 
+  _entrar(data) async {
     try {
-      print(_email);
-      print(_password);
-      await _auth.createUserWithEmailAndPassword(
-          email: _email,
-          password: _password);
+      criarUsuario(data);
       Navigator.of(context).pushReplacement(
-          MaterialPageRoute(
-              builder: (context) => Login()));
+        MaterialPageRoute(
+          builder: (context) => EventoListaCliente(),
+        ),
+      );
     } catch (e) {
       print(e);
     }
@@ -141,7 +137,7 @@ Widget _buildTextField(String labelText, TextInputType keyBoard, bool teste,
     keyboardType: keyBoard,
     decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyle(color: Colors.deepPurple, fontSize: 20.0)),
+        labelStyle: TextStyle(color: Colors.black54, fontSize: 20.0)),
     obscureText: teste,
   );
 }

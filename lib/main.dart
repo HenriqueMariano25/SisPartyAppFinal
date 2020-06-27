@@ -6,7 +6,7 @@ import 'http/webclient.dart';
 
 void main() {
   runApp(new MyApp());
-  findAllEventos().then((eventos) => print('novos eventos $eventos'));
+//  findAllEventos().then((eventos) => print('novos eventos $eventos'));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.pink,
         backgroundColor: Colors.white,
       ),
-      home: Login(),
+      home: Inicial(),
     );
   }
 }

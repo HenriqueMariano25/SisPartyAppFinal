@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/screens/cadastrar_cliente.dart';
+import 'eventos_cliente.dart';
+import 'eventos_fornecedor.dart';
 import 'login.dart';
 
 class Inicial extends StatefulWidget {
@@ -9,32 +12,43 @@ class Inicial extends StatefulWidget {
 }
 
 class _InicialState extends State<Inicial> {
-  final _auth = FirebaseAuth.instance;
-
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    _navegate();
+    _authenticated();
   }
-  _navegate() async{
-    await Future.delayed(Duration(seconds: 1));
 
-    final user = await _auth.currentUser();
-    if (user != null){
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => CadastrarCliente(),
-        ),
-      );
-    } else{
+  _authenticated() async{
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final token = pref.getString("token");
+    final client = pref.getString("client");
+    final uid = pref.getString("uid");
+    final type_user = pref.getString("type_user");
+    print(token);
+    print(client);
+    print(uid);
+    if(token != null && client != null && uid != null){
+      if(type_user == "Cliente"){
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => EventoListaCliente(),
+          ),
+        );
+      }else{
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => EventoListaFornecedor(),
+          ),
+        );
+
+      }
+    }else{
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
           builder: (context) => Login(),
         ),
       );
     }
-    //    await Future.delayed(Duration(seconds: 3));
-
   }
 
   @override

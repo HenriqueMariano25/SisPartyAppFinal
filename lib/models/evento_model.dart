@@ -5,7 +5,7 @@ class Evento{
   String dataRealizacao;
   bool local;
   String situacao;
-  int tipoEventoId;
+  String tipoEventoId;
   String createdAt;
 //  String updatedAt;
 

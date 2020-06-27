@@ -30,7 +30,7 @@ Future<List<Evento>> findAllEventos() async {
   final data = json.decode(response.body);
   final rest = data['events_accepts'] as List;
   final List<Evento> eventos = List();
-  for (Map<String, dynamic> eventoJson in rest ) {
+  for (Map<String, dynamic> eventoJson in (rest) ) {
     final Evento evento = Evento(
         eventoJson['id'],
         eventoJson['name'],
@@ -45,6 +45,24 @@ Future<List<Evento>> findAllEventos() async {
   return eventos;
 }
 
+Future<Evento> findEvento(id) async {
+  final Client client = HttpClientWithInterceptor.build(
+    interceptors: [LoggingInterceptor()],
+  );
+  final Response response = await client.get(url_base + 'event/' + id.toString());
+  print(response.body);
+  final data = json.decode(response.body);
+  final Evento evento = Evento(
+      data['id'],
+      data['name'],
+      data['description'],
+      data['realization_date'],
+      data['local'],
+      data['situation'],
+      data['event_type'],
+      data['created_at']);
+  return evento;
+}
 //void creatUser() async{
 //  var json_teste = {
 //    "email":"teste108@teste.com",

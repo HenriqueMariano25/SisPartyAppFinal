@@ -85,7 +85,7 @@ class EscolherCadastro extends StatelessWidget {
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
-                          "Me cadastrar como Fornecedor de Serviço",
+                          "Me cadastrar como Fornecedor",
                           style: TextStyle(
                             fontSize: 24.0,
                             color: Colors.white,

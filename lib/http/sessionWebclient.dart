@@ -23,7 +23,7 @@ class LoggingInterceptor implements InterceptorContract {
 }
 
 
-void criarUsuarioCliente(data) async {
+void criarUsuario(data) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   final Client client = HttpClientWithInterceptor.build(
     interceptors: [LoggingInterceptor()],
@@ -32,13 +32,16 @@ void criarUsuarioCliente(data) async {
   final Response response = await client.post(url_base + 'auth',
       headers: <String, String>{'Accept': 'application/vnd.api+json'},
       body: data);
+//  print(response.body);
+  final dataJson = json.decode(response.body);
   var token = response.headers['access-token'];
-  print(token);
+//  print(token);
   var cliente_headers = response.headers['client'];
-  print(cliente_headers);
+//  print(cliente_headers);
   var uid = response.headers['uid'];
-  print(uid);
+//  print(uid);
   pref.setString("token", token);
   pref.setString("client", cliente_headers);
   pref.setString("uid", uid);
+  pref.setString("type_user", dataJson["data"]["type_user"]);
 }
