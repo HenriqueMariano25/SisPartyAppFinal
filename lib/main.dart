@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sisparty/http/propostasWebclient.dart';
 import 'screens/inicial.dart';
 import 'screens/login.dart';
 import 'screens/eventos_cliente.dart';
@@ -6,6 +7,7 @@ import 'http/webclient.dart';
 
 void main() {
   runApp(new MyApp());
+  findAllProposals();
 //  findAllEventos().then((eventos) => print('novos eventos $eventos'));
 }
 

@@ -19,7 +19,6 @@ class _EventoListaClienteState extends State<EventoListaCliente> {
   void initState() {
     super.initState();
     _carregarEventos();
-    print('oi');
   }
 
   _carregarEventos() async {

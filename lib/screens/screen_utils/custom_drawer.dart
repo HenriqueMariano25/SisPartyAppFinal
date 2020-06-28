@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sisparty/screens/propostas.dart';
 
 import '../perfil.dart';
 
@@ -17,15 +18,17 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text('Eventos'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+
             },
           ),
           ListTile(
             title: Text('Propostas'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => Propostas(),
+                ),
+              );
             },
           ),
           ListTile(

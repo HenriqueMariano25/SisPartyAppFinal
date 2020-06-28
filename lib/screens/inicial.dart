@@ -20,14 +20,9 @@ class _InicialState extends State<Inicial> {
 
   _authenticated() async{
     SharedPreferences pref = await SharedPreferences.getInstance();
-    final token = pref.getString("token");
-    final client = pref.getString("client");
-    final uid = pref.getString("uid");
     final type_user = pref.getString("type_user");
-    print(token);
-    print(client);
-    print(uid);
-    if(token != null && client != null && uid != null){
+    final authenticated = pref.getString("authenticated");
+    if(authenticated == "true"){
       if(type_user == "Cliente"){
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

@@ -9,13 +9,13 @@ var url_base = "http://10.0.2.2:3000/";
 class LoggingInterceptor implements InterceptorContract {
   @override
   Future<RequestData> interceptRequest({RequestData data}) async {
-    print(data.baseUrl);
+//    print(data.baseUrl);
     return data;
   }
 
   @override
   Future<ResponseData> interceptResponse({ResponseData data}) async {
-    print(data.body);
+//    print(data.body);
     return data;
   }
 }
@@ -50,7 +50,6 @@ Future<Evento> findEvento(id) async {
     interceptors: [LoggingInterceptor()],
   );
   final Response response = await client.get(url_base + 'event/' + id.toString());
-  print(response.body);
   final data = json.decode(response.body);
   final Evento evento = Evento(
       data['id'],

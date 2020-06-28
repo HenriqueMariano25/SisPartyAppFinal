@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sisparty/http/sessionWebclient.dart';
 import 'package:sisparty/screens/escolher_cadastro.dart';
 import 'package:sisparty/screens/eventos_cliente.dart';
 
@@ -63,8 +64,11 @@ class _LoginState extends State<Login> {
                 ),
                 color: Colors.pink,
                 onPressed: () {
-                  debugPrint(
-                      _emailController.text + "|" + _passwordController.text);
+                  var userData = {
+                    "email": _emailController.text,
+                    "password": _passwordController.text,
+                  };
+                  _entrar(userData);
                 },
               ),
               Align(
@@ -92,4 +96,21 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+  _entrar(data) async {
+    try {
+      final res_return = entrar(data);
+      res_return.then((result){
+        if(result['result'] == true){
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => EventoListaCliente(),
+            ),
+          );
+        }
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
 }
+
