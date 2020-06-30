@@ -23,6 +23,7 @@ dependencies:
   dio: ^3.0.9
   http:
   http_interceptor:
+  flutter_conditional_rendering: ^1.1.1
   flutter:
     sdk: flutter
 

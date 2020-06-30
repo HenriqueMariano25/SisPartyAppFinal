@@ -19,7 +19,6 @@ class _EventoListaFornecedorState extends State<EventoListaFornecedor> {
   void initState() {
     super.initState();
     _carregarEventos();
-    print('oi');
   }
 
   _carregarEventos() async {

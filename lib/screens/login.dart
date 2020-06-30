@@ -97,15 +97,25 @@ class _LoginState extends State<Login> {
     );
   }
   _entrar(data) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       final res_return = entrar(data);
       res_return.then((result){
         if(result['result'] == true){
-          Navigator.of(context).pushReplacement(
-            MaterialPageRoute(
-              builder: (context) => EventoListaCliente(),
-            ),
-          );
+          final type_user = pref.getString('type_user');
+          if(type_user == "Cliente"){
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => EventoListaCliente(),
+              ),
+            );
+          }else if(type_user == "Fornecedor"){
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => EventoListaFornecedor(),
+              ),
+            );
+          }
         }
       });
     } catch (e) {

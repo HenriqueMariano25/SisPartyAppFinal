@@ -37,5 +37,19 @@ void findAllProposals() async{
   print(data);
   final rest = data as List;
 //  final List<>
+}
 
+void createProposals(data) async{
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final Client client = HttpClientWithInterceptor.build(
+    interceptors: [LoggingInterceptor()],
+  );
+  final Response response = await client.post(url_base + 'proposals',
+      headers: <String, String>{'Accept': 'application/vnd.api+json',
+      'access-token':pref.getString("token"), 'client':pref.getString("client"),
+      'uid':pref.getString("uid")},
+    body: data,
+  );
+//      headers: <String, String>{'Accept': 'application/vnd.api+json'},
+//      body: data);
 }

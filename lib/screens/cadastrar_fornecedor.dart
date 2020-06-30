@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
 import 'package:sisparty/screens/escolher_cadastro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sisparty/screens/eventos_fornecedor.dart';
 import 'eventos_cliente.dart';
 import 'login.dart';
 
@@ -12,7 +13,6 @@ class CadastrarFornecedor extends StatefulWidget {
 
 class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
   final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
@@ -121,7 +121,7 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => EventoListaCliente(),
+          builder: (context) => EventoListaFornecedor(),
         ),
       );
     } catch (e) {
