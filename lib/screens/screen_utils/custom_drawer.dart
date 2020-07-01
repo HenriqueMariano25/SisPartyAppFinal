@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sisparty/screens/propostas.dart';
+import 'package:sisparty/screens/Proposta/propostas.dart';
 
-import '../eventos_cliente.dart';
-import '../eventos_fornecedor.dart';
+import '../Evento/eventos_cliente.dart';
+import '../Evento/eventos_fornecedor.dart';
 import '../perfil.dart';
+import '../Proposta/proposta_fornecedor.dart';
 
 class CustomDrawer extends StatelessWidget {
 
@@ -44,7 +45,7 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => Propostas(),
+                  builder: (context) => PropostaFornecedor(),
                 ),
               );
             },

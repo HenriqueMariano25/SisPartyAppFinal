@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sisparty/screens/proposta_cliente.dart';
-import 'package:sisparty/screens/proposta_fornecedor.dart';
+import 'package:sisparty/screens/Proposta/proposta_cliente.dart';
+import 'package:sisparty/screens/Proposta/proposta_fornecedor.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 class Propostas extends StatefulWidget {

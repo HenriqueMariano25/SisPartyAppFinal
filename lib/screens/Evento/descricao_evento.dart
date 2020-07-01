@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/models/evento_model.dart';
-import 'package:sisparty/screens/eventos_cliente.dart';
+import 'package:sisparty/screens/Evento/eventos_cliente.dart';
 
-import 'criar_proposta.dart';
+import '../Proposta/criar_proposta.dart';
 //import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
 
 class DescricaoEvento extends StatefulWidget {
@@ -98,13 +98,6 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
                   }
                 },
               ),
-//              Conditional.single(
-//                context: context,
-//                // ignore: unrelated_type_equality_checks
-//                conditionBuilder: (BuildContext context) => _is_fornecedor,
-//                widgetBuilder: (BuildContext context) => Text('The condition is true!'),
-//                fallbackBuilder: (BuildContext context) => Text('The condition is false!'),
-//              ),
             ],
           ),
         ));

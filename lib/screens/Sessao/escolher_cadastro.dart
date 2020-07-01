@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sisparty/screens/login.dart';
-import 'package:sisparty/screens/cadastrar_cliente.dart';
-import 'package:sisparty/screens/cadastrar_fornecedor.dart';
+import 'package:sisparty/screens/Sessao/login.dart';
+import 'package:sisparty/screens/Sessao/cadastrar_cliente.dart';
+import 'package:sisparty/screens/Sessao/cadastrar_fornecedor.dart';
 
 class EscolherCadastro extends StatelessWidget {
   @override

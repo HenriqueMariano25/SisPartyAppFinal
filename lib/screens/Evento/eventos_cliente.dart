@@ -3,7 +3,7 @@ import 'package:sisparty/consultas/eventos_consultas.dart';
 import 'package:sisparty/http/webclient.dart';
 import 'package:sisparty/http/webclient.dart';
 import 'package:sisparty/models/evento_model.dart';
-import 'package:sisparty/screens/descricao_evento.dart';
+import 'package:sisparty/screens/Evento/descricao_evento.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 class EventoListaCliente extends StatefulWidget {

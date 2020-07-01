@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
-import 'login.dart';
+import 'Sessao/login.dart';
 
 class Perfil extends StatelessWidget {
   @override

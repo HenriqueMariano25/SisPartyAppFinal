@@ -4,6 +4,7 @@ import 'package:sisparty/models/evento_model.dart';
 
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_interceptor.dart';
+import 'package:sisparty/models/proposta_model.dart';
 
 var url_base = "http://10.0.2.2:3000/";
 
@@ -22,20 +23,52 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
-void findAllProposals() async{
+Future<dynamic> findAllProposals() async{
   SharedPreferences pref = await SharedPreferences.getInstance();
   final Client client = HttpClientWithInterceptor.build(
     interceptors: [LoggingInterceptor()],
   );
-  final Response response = await client.get(url_base + "/proposals",
+  final Response response = await client.get(url_base + "proposals",
     headers: <String, String>{'Accept': 'application/vnd.api+json',
     'access-token':pref.getString("token"), 'client':pref.getString("client"),
     'uid':pref.getString("uid")},
   );
-  print(response);
   final data = json.decode(response.body);
-  print(data);
-  final rest = data as List;
+  final proposals_sent = data['proposals_sent'] as List;
+  final List<Proposta> propostas_enviadas = List();
+  for (Map<String, dynamic> propostasJson in (proposals_sent) ) {
+    final Proposta proposta = Proposta(
+        propostasJson['id'],
+        propostasJson['description'],
+        propostasJson['service'],
+        propostasJson['service_description'],
+        propostasJson['value'],
+        propostasJson['situation'],
+        propostasJson['event_id'],
+        propostasJson['user_id'],
+        propostasJson['created_at'],
+        propostasJson['updatedAt']);
+    propostas_enviadas.add(proposta);
+  }
+  print(propostas_enviadas.length);
+  final proposals_accepted = data['proposals_accepted'] as List;
+  final List<Proposta> propostas_aceitas = List();
+  for (Map<String, dynamic> propostasJson in (proposals_accepted) ) {
+    final Proposta proposta = Proposta(
+        propostasJson['id'],
+        propostasJson['description'],
+        propostasJson['service'],
+        propostasJson['service_description'],
+        propostasJson['value'],
+        propostasJson['situation'],
+        propostasJson['event_id'],
+        propostasJson['user_id'],
+        propostasJson['created_at'],
+        propostasJson['updatedAt']);
+    propostas_aceitas.add(proposta);
+  }
+  print(propostas_enviadas);
+  return {"propostas_enviadas" :propostas_enviadas, "propostas_aceitas":propostas_aceitas};
 //  final List<>
 }
 
@@ -50,6 +83,9 @@ void createProposals(data) async{
       'uid':pref.getString("uid")},
     body: data,
   );
+  if(response.statusCode == 200){
+    pref.setString("token", response.headers['access-token']);
+  }
 //      headers: <String, String>{'Accept': 'application/vnd.api+json'},
 //      body: data);
 }

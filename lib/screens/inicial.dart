@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sisparty/screens/cadastrar_cliente.dart';
-import 'eventos_cliente.dart';
-import 'eventos_fornecedor.dart';
-import 'login.dart';
+import 'package:sisparty/screens/Sessao/cadastrar_cliente.dart';
+import 'Evento/eventos_cliente.dart';
+import 'Evento/eventos_fornecedor.dart';
+import 'Sessao/login.dart';
 
 class Inicial extends StatefulWidget {
   @override

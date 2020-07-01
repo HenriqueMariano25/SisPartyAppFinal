@@ -1,20 +1,19 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:sisparty/utils/constants.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
-
-import 'escolher_cadastro.dart';
-import 'eventos_cliente.dart';
+import 'package:sisparty/screens/Sessao/escolher_cadastro.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sisparty/screens/Evento/eventos_fornecedor.dart';
+import '../Evento/eventos_cliente.dart';
 import 'login.dart';
 
-class CadastrarCliente extends StatefulWidget {
+class CadastrarFornecedor extends StatefulWidget {
   @override
-  _CadastrarClienteState createState() => _CadastrarClienteState();
+  _CadastrarFornecedorState createState() => _CadastrarFornecedorState();
 }
 
-class _CadastrarClienteState extends State<CadastrarCliente> {
+class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
+  final _formKey = GlobalKey<FormState>();
+
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -23,26 +22,14 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
   final _dateBirthController = TextEditingController();
   final _addressController = TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
-
   var _email = "";
   var _password = "";
 
-  Future<bool>to() async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return await pref.setString("teste", "valueteste");
-  }
-
-  Future<String>load() async{
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    return pref.getString("teste");
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastrar-se como Cliente"),
+        title: Text("Cadastrar-se como Fornecedor"),
         centerTitle: true,
         actions: <Widget>[
           FlatButton(
@@ -57,7 +44,7 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                 ),
               );
             },
-          )
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -77,16 +64,16 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  "Cliente",
+                  "Fornecedor de Serviço",
                   style: TextStyle(fontSize: 26.0, fontWeight: FontWeight.bold),
                   textAlign: TextAlign.center,
                 ),
                 _buildTextField(
                     "Nome", TextInputType.text, false, _nameController),
-                _buildTextField("Email", TextInputType.text, false,
-                    _emailController),
-                _buildTextField("Senha", TextInputType.text, true,
-                    _passwordController),
+                _buildTextField(
+                    "Email", TextInputType.text, false, _emailController),
+                _buildTextField(
+                    "Senha", TextInputType.text, true, _passwordController),
                 _buildTextField("Confirmar Senha", TextInputType.text, true,
                     _confirmPasswordController),
                 _buildTextField(
@@ -105,11 +92,11 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                           "email": _emailController.text,
                           "name": _nameController.text,
                           "password": _passwordController.text,
-                          "password_confirmation": _confirmPasswordController
-                              .text,
+                          "password_confirmation":
+                              _confirmPasswordController.text,
 //                          "address": _addressController.text,
 //                          "cpfcnpj": _cpfcnpjController.text,
-                          "type_user": "Cliente"
+                          "type_user": "Fornecedor"
                         };
                         _entrar(userData);
                       }
@@ -130,59 +117,17 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
   }
 
   _entrar(data) async {
-    try{
+    try {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => EventoListaCliente(),
+          builder: (context) => EventoListaFornecedor(),
         ),
       );
-    }catch(e){
+    } catch (e) {
       print(e);
     }
-//    SharedPreferences pref = await SharedPreferences.getInstance();
-//    print(pref.getString("teste"));
-//    print(load().toString());
-//    final _dio = Dio(BaseOptions(baseUrl: BASEURL));
-//
-//    _dio.options.headers['Accept'] = "application/vnd.api+json";
-//    _dio.options.headers['Content-Type'] = "application/json";
-//    var response = await _dio.post('auth', data: data);
-//    print(response.headers["access-token"]);
   }
-//    responseInterceptor(Response response) {
-//      dynamic responseInterceptor(Response options) async {
-//        if (options.headers.value("verifyToken") != null) {
-//          //if the header is present, then compare it with the Shared Prefs key
-//          SharedPreferences prefs = await SharedPreferences.getInstance();
-//          var verifyToken = prefs.get("VerifyToken");
-//
-//          // if the value is the same as the header, continue with the request
-//          if (options.headers.value("verifyToken") == verifyToken) {
-//            return options;
-//          }
-//        }
-//
-//      }
-
-//    _dio.options.headers['Accept'] = "application/vnd.api+json";
-//    final resp = await  _dio.get('/events');
-//
-//    _formKey.currentState.save();
-//
-//    try {
-//      print(_email);
-//      print(_password);
-//      await _auth.createUserWithEmailAndPassword(
-//          email: _email,
-//          password: _password);
-//      Navigator.of(context).pushReplacement(
-//          MaterialPageRoute(
-//              builder: (context) => Login()));
-//    } catch (e) {
-//      print(e);
-//    }
-//  }
 }
 
 Widget _buildTextField(String labelText, TextInputType keyBoard, bool teste,

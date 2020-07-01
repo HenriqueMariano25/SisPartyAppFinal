@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sisparty/http/propostasWebclient.dart';
 import 'package:sisparty/models/evento_model.dart';
 
-import 'descricao_evento.dart';
+import '../Evento/descricao_evento.dart';
 
 class CriarProposta extends StatefulWidget {
   final Evento evento;

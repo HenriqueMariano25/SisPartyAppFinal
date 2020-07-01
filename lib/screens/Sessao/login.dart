@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
-import 'package:sisparty/screens/escolher_cadastro.dart';
-import 'package:sisparty/screens/eventos_cliente.dart';
+import 'package:sisparty/screens/Sessao/escolher_cadastro.dart';
+import 'package:sisparty/screens/Evento/eventos_cliente.dart';
 
-import 'eventos_fornecedor.dart';
+import '../Evento/eventos_fornecedor.dart';
 
 class Login extends StatefulWidget {
   @override

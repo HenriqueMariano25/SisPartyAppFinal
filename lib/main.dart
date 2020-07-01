@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sisparty/http/propostasWebclient.dart';
 import 'screens/inicial.dart';
-import 'screens/login.dart';
-import 'screens/eventos_cliente.dart';
+import 'screens/Sessao/login.dart';
+import 'screens/Evento/eventos_cliente.dart';
 import 'http/webclient.dart';
 
 void main() {
