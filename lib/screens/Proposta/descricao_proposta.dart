@@ -17,6 +17,8 @@ class DescricaoProposta extends StatefulWidget {
 }
 
 class _DescricaoPropostasState extends State<DescricaoProposta> {
+  var _heightEvent = 0.0;
+
   @override
   void initState() {
     super.initState();
@@ -80,16 +82,36 @@ class _DescricaoPropostasState extends State<DescricaoProposta> {
               "Valor: ${widget.proposta.value}",
               style: TextStyle(fontSize: 20.0),
             ),
-            AnimatedContainer(duration: Duration(seconds: 3),child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-              Text("Evento"),
-              Text("Nome: ${widget.proposta.evento.nome}"),
-              Text("Descrição: ${widget.proposta.evento.descricao}"),
-              Text("Data de realização: ${widget.proposta.evento.dataRealizacao}"),
-              Text("Tipo do evento: ${widget.proposta.evento.tipoEventoId}"),
-            ],
-            ),),
-            
+            FlatButton(
+              onPressed: () {
+                setState(() {
+                  if(_heightEvent == 0){
+                    _heightEvent = 80.0;
+                  }else{
+                    _heightEvent = 0.0;
+                  }
+                  
+                });
+              },
+              child: Text("Ver evento"),
+            ),
+            AnimatedContainer(
+                duration: Duration(seconds: 3),
+                child: Container(
+                  height: _heightEvent,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text("Evento"),
+                      Text("Nome: ${widget.proposta.evento.nome}"),
+                      Text("Descrição: ${widget.proposta.evento.descricao}"),
+                      Text(
+                          "Data de realização: ${widget.proposta.evento.dataRealizacao}"),
+                      Text(
+                          "Tipo do evento: ${widget.proposta.evento.tipoEventoId}"),
+                    ],
+                  ),
+                )),
             FutureBuilder(
               future: _verificar_fornecedor(),
               // ignore: missing_return
