@@ -35,8 +35,19 @@ Future<dynamic> findAllProposals() async{
   );
   final data = json.decode(response.body);
   final proposals_sent = data['proposals_sent'] as List;
+  print(proposals_sent);
   final List<Proposta> propostas_enviadas = List();
-  for (Map<String, dynamic> propostasJson in (proposals_sent) ) {
+ for (Map<String, dynamic> propostasJson in (proposals_sent) ) {
+    final Evento eventoLocal = Evento(
+      propostasJson['event']['id'],
+      propostasJson['event']['nome'],
+      propostasJson['event']['description'],
+      propostasJson['event']['realization_date'],
+      propostasJson['event']['local'],
+      propostasJson['event']['situation'],
+      propostasJson['event']['event_type'],
+      propostasJson['event']['created_at'],
+    );
     final Proposta proposta = Proposta(
         propostasJson['id'],
         propostasJson['description'],
@@ -44,16 +55,25 @@ Future<dynamic> findAllProposals() async{
         propostasJson['service_description'],
         propostasJson['value'],
         propostasJson['situation'],
-        propostasJson['event_id'],
         propostasJson['user_id'],
         propostasJson['created_at'],
-        propostasJson['updatedAt']);
+        eventoLocal);
     propostas_enviadas.add(proposta);
   }
   print(propostas_enviadas.length);
-  final proposals_accepted = data['proposals_accepted'] as List;
+  /* final proposals_accepted = data['proposals_accepted'] as List;
   final List<Proposta> propostas_aceitas = List();
   for (Map<String, dynamic> propostasJson in (proposals_accepted) ) {
+    final Evento eventoLocal = Evento(
+      propostasJson['event']['id'],
+      propostasJson['event']['nome'],
+      propostasJson['event']['description'],
+      propostasJson['event']['realization_date'],
+      propostasJson['event']['local'],
+      propostasJson['event']['situation'],
+      propostasJson['event']['event_type'],
+      propostasJson['event']['created_at'],
+    );
     final Proposta proposta = Proposta(
         propostasJson['id'],
         propostasJson['description'],
@@ -61,14 +81,14 @@ Future<dynamic> findAllProposals() async{
         propostasJson['service_description'],
         propostasJson['value'],
         propostasJson['situation'],
-        propostasJson['event_id'],
         propostasJson['user_id'],
         propostasJson['created_at'],
-        propostasJson['updatedAt']);
+        eventoLocal);
     propostas_aceitas.add(proposta);
   }
   print(propostas_enviadas);
-  return {"propostas_enviadas" :propostas_enviadas, "propostas_aceitas":propostas_aceitas};
+  return {"propostas_enviadas" :propostas_enviadas, "propostas_aceitas":propostas_aceitas}; */
+  return {"propostas_enviadas" :propostas_enviadas};
 //  final List<>
 }
 

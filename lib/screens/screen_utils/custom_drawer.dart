@@ -5,7 +5,6 @@ import 'package:sisparty/screens/Proposta/propostas.dart';
 import '../Evento/eventos_cliente.dart';
 import '../Evento/eventos_fornecedor.dart';
 import '../perfil.dart';
-import '../Proposta/proposta_fornecedor.dart';
 
 class CustomDrawer extends StatelessWidget {
 
@@ -45,7 +44,7 @@ class CustomDrawer extends StatelessWidget {
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => PropostaFornecedor(),
+                  builder: (context) => Propostas(),
                 ),
               );
             },

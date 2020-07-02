@@ -80,6 +80,16 @@ class _DescricaoPropostasState extends State<DescricaoProposta> {
               "Valor: ${widget.proposta.value}",
               style: TextStyle(fontSize: 20.0),
             ),
+            AnimatedContainer(duration: Duration(seconds: 3),child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+              Text("Evento"),
+              Text("Nome: ${widget.proposta.evento.nome}"),
+              Text("Descrição: ${widget.proposta.evento.descricao}"),
+              Text("Data de realização: ${widget.proposta.evento.dataRealizacao}"),
+              Text("Tipo do evento: ${widget.proposta.evento.tipoEventoId}"),
+            ],
+            ),),
+            
             FutureBuilder(
               future: _verificar_fornecedor(),
               // ignore: missing_return

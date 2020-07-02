@@ -10,24 +10,34 @@ class Propostas extends StatefulWidget {
 }
 
 class _PropostasState extends State<Propostas> {
-
-
+  _authenticated() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    final type_user = pref.getString("type_user");
+    if (type_user == "Cliente") {
+      return PropostaCliente();
+    } else {
+      return PropostaFornecedor();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text("Propostas"),),
-        drawer: CustomDrawer(),
-//        body: _authenticated(),
-    );
+    return FutureBuilder<dynamic>(
+        future: _authenticated(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Scaffold(
+                appBar: AppBar(
+                  title: Text("Propostas"),
+                ),
+                drawer: CustomDrawer(),
+                body: CircularProgressIndicator());
+          }
+          return snapshot.data;
+        },
+      );
+      //  _authenticated(
   }
-//  _authenticated(){
-//    SharedPreferences pref = SharedPreferences.getInstance();
-//    final type_user = pref.getString("type_user");
-//    if(type_user == "Cliente"){
-//      return PropostaCliente();
-//    }else{
-//      return PropostaFornecedor();
-//    }
-//  }
+
+  
 }

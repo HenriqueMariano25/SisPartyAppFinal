@@ -32,26 +32,28 @@ class _EventoListaFornecedorState extends State<EventoListaFornecedor> {
             case ConnectionState.done:
               if (snapshot.hasData) {
                 final List<Evento> eventos = snapshot.data;
-                return ListView.builder(itemBuilder: (context, index) {
-                  final Evento evento = eventos[index];
-                  return Card(
-                    child: new InkWell(
-                      onTap: () {
-                        print('clicado: ${evento.nome}');
-                        print('id: ${evento.id}');
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => DescricaoEvento(evento),
+                return ListView.builder(
+                    itemCount: eventos.length,
+                    itemBuilder: (context, index) {
+                      final Evento evento = eventos[index];
+                      return Card(
+                        child: new InkWell(
+                          onTap: () {
+                            print('clicado: ${evento.nome}');
+                            print('id: ${evento.id}');
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => DescricaoEvento(evento),
+                              ),
+                            );
+                            findEvento(evento.id);
+                          },
+                          child: ListTile(
+                            title: Text(evento.nome),
                           ),
-                        );
-                        findEvento(evento.id);
-                      },
-                      child: ListTile(
-                        title: Text(evento.nome),
-                      ),
-                    ),
-                  );
-                });
+                        ),
+                      );
+                    });
               }
           }
         },
