@@ -3,6 +3,7 @@ import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/models/evento_model.dart';
 import 'package:sisparty/screens/Evento/eventos_cliente.dart';
+import 'package:sisparty/screens/Proposta/evento_propostas.dart';
 
 import '../Proposta/criar_proposta.dart';
 //import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
@@ -35,7 +36,6 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
     } else {
       return false;
     }
-    print(_is_fornecedor);
   }
 
   @override
@@ -54,7 +54,7 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => EventoListaCliente(),
+                    builder: (context) => EventosCliente(),
                   ),
                 );
               },
@@ -65,6 +65,16 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
           padding: EdgeInsets.all(8.0),
           child: ListView(
             children: <Widget>[
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => EventoPropostas(widget.evento.id),
+                    ),
+                  );
+                },
+                child: Text("Ver propostas"),
+              ),
               Text(
                 widget.evento.nome,
                 style: TextStyle(
@@ -94,7 +104,16 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
                       child: Text("Criar proposta"),
                     );
                   } else {
-                    return Text("False");
+                    return RaisedButton(
+                      onPressed: () {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => CriarProposta(widget.evento),
+                          ),
+                        );
+                      },
+                      child: Text("Excluir evento"),
+                    );
                   }
                 },
               ),

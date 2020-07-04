@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:sisparty/http/propostasWebclient.dart';
-import 'package:sisparty/models/evento_model.dart';
+import 'package:sisparty/http/eventosWebclient.dart';
+import 'package:sisparty/screens/Evento/eventos.dart';
 
-import '../Evento/descricao_evento.dart';
-
-class CriarProposta extends StatefulWidget {
-  final Evento evento;
-
-  CriarProposta(this.evento);
-
+class CriarEvento extends StatefulWidget {
   @override
-  _CriarPropostaState createState() => _CriarPropostaState();
+  _CriarEventoState createState() => _CriarEventoState();
 }
 
-class _CriarPropostaState extends State<CriarProposta> {
+class _CriarEventoState extends State<CriarEvento> {
   final _formKey = GlobalKey<FormState>();
 
-  final _descricaoGeralController = TextEditingController();
-  final _servicoPrestadoController = TextEditingController();
-  final _descricaoServicoController = TextEditingController();
-  final _valorController = TextEditingController();
+  final _nomeEventoController = TextEditingController();
+  final _dataRealizacaoController = TextEditingController();
+  final _descricaoEventoController = TextEditingController();
+  final _tipoEventoController = TextEditingController();
+  final _localController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +35,7 @@ class _CriarPropostaState extends State<CriarProposta> {
             onPressed: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => DescricaoEvento(widget.evento),
+                  builder: (context) => Eventos(),
                 ),
               );
             },
@@ -57,42 +52,45 @@ class _CriarPropostaState extends State<CriarProposta> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   Text(
-                    "Criar proposta",
+                    "Criar evento",
                     style:
                         TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
                   ),
+                  TextFormField(
+                    controller: _nomeEventoController,
+                    decoration: InputDecoration(
+                      labelText: "Nome do evento",
+                      labelStyle: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
+                  TextFormField(
+                    controller: _dataRealizacaoController,
+                    decoration: InputDecoration(
+                      labelText: "Data de realização",
+                      labelStyle: TextStyle(fontSize: 20.0),
+                    ),
+                  ),
                   TextField(
-                    controller: _descricaoGeralController,
+                    controller: _descricaoEventoController,
                     keyboardType: TextInputType.multiline,
                     minLines: 7,
                     maxLines: 10,
                     decoration: InputDecoration(
-                      labelText: "Descrição geral",
+                      labelText: "Descrição do evento",
                       labelStyle: TextStyle(fontSize: 20.0),
                     ),
                   ),
                   TextFormField(
-                    controller: _servicoPrestadoController,
+                    controller: _tipoEventoController,
                     decoration: InputDecoration(
-                      labelText: "Serviço Prestado",
+                      labelText: "Tipo do evento",
                       labelStyle: TextStyle(fontSize: 20.0),
                     ),
                   ),
                   TextFormField(
-                    controller: _descricaoServicoController,
-                    keyboardType: TextInputType.multiline,
-                    minLines: 4,
-                    maxLines: null,
+                    controller: _localController,
                     decoration: InputDecoration(
-                      labelText: "Descrição do serviço",
-                      labelStyle: TextStyle(fontSize: 20.0),
-                    ),
-                  ),
-                  TextFormField(
-                    controller: _valorController,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      labelText: "Valor",
+                      labelText: "Tem local ?",
                       labelStyle: TextStyle(fontSize: 20.0),
                     ),
                   ),
@@ -100,18 +98,18 @@ class _CriarPropostaState extends State<CriarProposta> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         var userData = {
-                          "description": _descricaoGeralController.text,
-                          "service": _servicoPrestadoController.text,
-                          "service_description":
-                              _descricaoServicoController.text,
-                          "value": _valorController.text,
-                          "event": widget.evento.id.toString()
+                          "name": _nomeEventoController.text,
+                          "description": _dataRealizacaoController.text,
+                          "realization_date": _descricaoEventoController.text,
+                          "type": _tipoEventoController.text,
+                          "local": _localController.text,
+                          "situation": "Em aberto"
                         };
-                        _enviar_proposta(userData);
+                        _criarEvento(userData);
                       }
                     },
-                    child: Text("Enviar proposta"),
-                  )
+                    child: Text("Criar"),
+                  ),
                 ]),
           ),
         ),
@@ -119,12 +117,12 @@ class _CriarPropostaState extends State<CriarProposta> {
     );
   }
 
-  _enviar_proposta(data) async {
+  _criarEvento(data) async {
     try {
-      createProposals(data);
+      criarEvento(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => DescricaoEvento(widget.evento),
+          builder: (context) => Eventos(),
         ),
       );
     } catch (e) {

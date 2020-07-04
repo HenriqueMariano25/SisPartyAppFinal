@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
+import 'package:sisparty/models/evento_model.dart';
+import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/screens/Sessao/escolher_cadastro.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sisparty/screens/Evento/eventos_fornecedor.dart';
@@ -121,7 +123,7 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => EventoListaFornecedor(),
+          builder: (context) => Eventos(),
         ),
       );
     } catch (e) {

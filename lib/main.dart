@@ -3,11 +3,10 @@ import 'package:sisparty/http/propostasWebclient.dart';
 import 'screens/inicial.dart';
 import 'screens/Sessao/login.dart';
 import 'screens/Evento/eventos_cliente.dart';
-import 'http/webclient.dart';
+import 'http/eventosWebclient.dart';
 
 void main() {
   runApp(new MyApp());
-  findAllProposals();
 //  findAllEventos().then((eventos) => print('novos eventos $eventos'));
 }
 

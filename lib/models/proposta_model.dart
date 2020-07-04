@@ -1,4 +1,5 @@
 import "package:sisparty/models/evento_model.dart";
+
 class Proposta {
   int id;
   String description;
@@ -10,16 +11,9 @@ class Proposta {
   String createdAt;
   Evento evento;
 
-  Proposta(
-      this.id,
-      this.description,
-      this.service,
-      this.serviceDescription,
-      this.value,
-      this.situation,
-      this.userId,
-      this.createdAt,
-      this.evento);
+  Proposta(this.id, this.description, this.service, this.serviceDescription,
+      this.value, this.situation, this.userId, this.createdAt,
+      [this.evento]);
 //  Proposta.fromJson(Map<String, dynamic> json) {
 //    id = json['id'];
 //    description = json['description'];

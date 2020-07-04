@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:sisparty/models/evento_model.dart';
+import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
@@ -29,15 +31,16 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
   var _email = "";
   var _password = "";
 
-  Future<bool>to() async{
+  Future<bool> to() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return await pref.setString("teste", "valueteste");
   }
 
-  Future<String>load() async{
+  Future<String> load() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     return pref.getString("teste");
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,10 +86,10 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                 ),
                 _buildTextField(
                     "Nome", TextInputType.text, false, _nameController),
-                _buildTextField("Email", TextInputType.text, false,
-                    _emailController),
-                _buildTextField("Senha", TextInputType.text, true,
-                    _passwordController),
+                _buildTextField(
+                    "Email", TextInputType.text, false, _emailController),
+                _buildTextField(
+                    "Senha", TextInputType.text, true, _passwordController),
                 _buildTextField("Confirmar Senha", TextInputType.text, true,
                     _confirmPasswordController),
                 _buildTextField(
@@ -105,8 +108,8 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                           "email": _emailController.text,
                           "name": _nameController.text,
                           "password": _passwordController.text,
-                          "password_confirmation": _confirmPasswordController
-                              .text,
+                          "password_confirmation":
+                              _confirmPasswordController.text,
 //                          "address": _addressController.text,
 //                          "cpfcnpj": _cpfcnpjController.text,
                           "type_user": "Cliente"
@@ -130,14 +133,14 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
   }
 
   _entrar(data) async {
-    try{
+    try {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => EventoListaCliente(),
+          builder: (context) => Eventos(),
         ),
       );
-    }catch(e){
+    } catch (e) {
       print(e);
     }
 //    SharedPreferences pref = await SharedPreferences.getInstance();

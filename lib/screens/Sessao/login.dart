@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/http/sessionWebclient.dart';
+import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/screens/Sessao/escolher_cadastro.dart';
 import 'package:sisparty/screens/Evento/eventos_cliente.dart';
 
@@ -12,7 +13,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
 
@@ -96,26 +96,18 @@ class _LoginState extends State<Login> {
       ),
     );
   }
+
   _entrar(data) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     try {
       final res_return = entrar(data);
-      res_return.then((result){
-        if(result['result'] == true){
-          final type_user = pref.getString('type_user');
-          if(type_user == "Cliente"){
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => EventoListaCliente(),
-              ),
-            );
-          }else if(type_user == "Fornecedor"){
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => EventoListaFornecedor(),
-              ),
-            );
-          }
+      res_return.then((result) {
+        if (result['result'] == true) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => Eventos(),
+            ),
+          );
         }
       });
     } catch (e) {
@@ -123,4 +115,3 @@ class _LoginState extends State<Login> {
     }
   }
 }
-

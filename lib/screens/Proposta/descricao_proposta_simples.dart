@@ -4,36 +4,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/models/proposta_model.dart';
 import 'package:sisparty/screens/Proposta/proposta_fornecedor.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
+import 'package:sisparty/http/propostasWebclient.dart';
 
-import '../Evento/eventos_cliente.dart';
-
-class DescricaoProposta extends StatefulWidget {
+class DescricaoPropostaSimples extends StatefulWidget {
   final Proposta proposta;
 
-  DescricaoProposta(this.proposta);
+  DescricaoPropostaSimples(this.proposta);
 
   @override
-  _DescricaoPropostasState createState() => _DescricaoPropostasState();
+  _DescricaoPropostaSimplesState createState() =>
+      _DescricaoPropostaSimplesState();
 }
 
-class _DescricaoPropostasState extends State<DescricaoProposta> {
+class _DescricaoPropostaSimplesState extends State<DescricaoPropostaSimples> {
   var _heightEvent = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _verificar_fornecedor().then((value) => _is_fornecedor = value);
+    _verificarPropostas().then((value) => _isAceita = value);
   }
 
-  bool _is_fornecedor = false;
+  bool _isAceita = false;
 
-  Future<dynamic> _verificar_fornecedor() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    final type_user = pref.getString("type_user");
-    if (type_user == "Fornecedor") {
-      return true;
-    } else {
+  Future _verificarPropostas() async {
+    if (widget.proposta.situation == "Aceita") {
       return false;
+    } else {
+      return true;
     }
   }
 
@@ -82,46 +80,27 @@ class _DescricaoPropostasState extends State<DescricaoProposta> {
               "Valor: ${widget.proposta.value}",
               style: TextStyle(fontSize: 20.0),
             ),
-            FlatButton(
-              onPressed: () {
-                setState(() {
-                  if (_heightEvent == 0) {
-                    _heightEvent = 80.0;
-                  } else {
-                    _heightEvent = 0.0;
-                  }
-                });
-              },
-              child: Text("Ver evento"),
-            ),
-            AnimatedContainer(
-                duration: Duration(seconds: 3),
-                child: Container(
-                  height: _heightEvent,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text("Evento"),
-                      Text("Nome: ${widget.proposta.evento.nome}"),
-                      Text("Descrição: ${widget.proposta.evento.descricao}"),
-                      Text(
-                          "Data de realização: ${widget.proposta.evento.dataRealizacao}"),
-                      Text(
-                          "Tipo do evento: ${widget.proposta.evento.tipoEventoId}"),
-                    ],
-                  ),
-                )),
             FutureBuilder(
-              future: _verificar_fornecedor(),
+              future: _verificarPropostas(),
               // ignore: missing_return
               builder: (context, snapshot) {
                 print(snapshot.data);
                 if (snapshot.data == true) {
-                  return RaisedButton(
-                    onPressed: () {
-                      print("Deletar");
-                    },
-                    child: Text("Cancelar proposta"),
+                  return Column(
+                    children: <Widget>[
+                      RaisedButton(
+                        onPressed: () {
+                          acceptProposal(widget.proposta.id);
+                        },
+                        child: Text("Aceitar proposta"),
+                      ),
+                      RaisedButton(
+                        onPressed: () {
+                          declinedProposal(widget.proposta.id);
+                        },
+                        child: Text("Recusar proposta"),
+                      )
+                    ],
                   );
                 } else {
                   return Container();
@@ -132,5 +111,9 @@ class _DescricaoPropostasState extends State<DescricaoProposta> {
         ),
       ),
     );
+  }
+
+  _aceitarProposta(id) {
+    acceptProposal(id);
   }
 }
