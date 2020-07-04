@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/models/proposta_model.dart';
 import 'package:sisparty/screens/Proposta/proposta_fornecedor.dart';
+import 'package:sisparty/screens/Proposta/propostas.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 import '../Evento/eventos_cliente.dart';
@@ -54,7 +55,7 @@ class _DescricaoPropostasState extends State<DescricaoProposta> {
             onPressed: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (context) => PropostaFornecedor(),
+                  builder: (context) => Propostas(),
                 ),
               );
             },

@@ -23,13 +23,13 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
-Future<dynamic> findAllProposals() async {
+Future<dynamic> propostasFornecedor() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   final Client client = HttpClientWithInterceptor.build(
     interceptors: [LoggingInterceptor()],
   );
   final Response response = await client.get(
-    url_base + "proposals",
+    url_base + "proposals/provider",
     headers: <String, String>{
       'Accept': 'application/vnd.api+json',
       'access-token': pref.getString("token"),
@@ -38,11 +38,10 @@ Future<dynamic> findAllProposals() async {
     },
   );
   final data = json.decode(response.body);
-  final proposals_sent = data['proposals_sent'] as List;
-  print(proposals_sent);
-  final List<Proposta> propostas_enviadas = List();
-  for (Map<String, dynamic> propostasJson in (proposals_sent)) {
-    final Evento eventoLocal = Evento(
+  final proposalsSent = data['proposals_sent'] as List;
+  final List<Proposta> propostasEnviadas = List();
+  for (Map<String, dynamic> propostasJson in (proposalsSent)) {
+    final Evento eventoEnviado = Evento(
       propostasJson['event']['id'],
       propostasJson['event']['nome'],
       propostasJson['event']['description'],
@@ -52,7 +51,7 @@ Future<dynamic> findAllProposals() async {
       propostasJson['event']['event_type'],
       propostasJson['event']['created_at'],
     );
-    final Proposta proposta = Proposta(
+    final Proposta propostasEnviada = Proposta(
         propostasJson['id'],
         propostasJson['description'],
         propostasJson['service'],
@@ -61,10 +60,64 @@ Future<dynamic> findAllProposals() async {
         propostasJson['situation'],
         propostasJson['user_id'],
         propostasJson['created_at'],
-        eventoLocal);
-    propostas_enviadas.add(proposta);
+        eventoEnviado);
+    propostasEnviadas.add(propostasEnviada);
   }
-  return {"propostas_enviadas": propostas_enviadas};
+  final proposalsAccept = data['proposals_accept'] as List;
+  final List<Proposta> propostasAceitas = List();
+  for (Map<String, dynamic> propostasJson in (proposalsAccept)) {
+    final Evento eventoAceito = Evento(
+      propostasJson['event']['id'],
+      propostasJson['event']['nome'],
+      propostasJson['event']['description'],
+      propostasJson['event']['realization_date'],
+      propostasJson['event']['local'],
+      propostasJson['event']['situation'],
+      propostasJson['event']['event_type'],
+      propostasJson['event']['created_at'],
+    );
+    final Proposta propostaAceita = Proposta(
+        propostasJson['id'],
+        propostasJson['description'],
+        propostasJson['service'],
+        propostasJson['service_description'],
+        propostasJson['value'],
+        propostasJson['situation'],
+        propostasJson['user_id'],
+        propostasJson['created_at'],
+        eventoAceito);
+    propostasAceitas.add(propostaAceita);
+  }
+  final proposalsDeclined = data['proposals_declined'] as List;
+  final List<Proposta> propostasRecusadas = List();
+  for (Map<String, dynamic> propostasJson in (proposalsDeclined)) {
+    final Evento eventoRecusado = Evento(
+      propostasJson['event']['id'],
+      propostasJson['event']['nome'],
+      propostasJson['event']['description'],
+      propostasJson['event']['realization_date'],
+      propostasJson['event']['local'],
+      propostasJson['event']['situation'],
+      propostasJson['event']['event_type'],
+      propostasJson['event']['created_at'],
+    );
+    final Proposta propostaRecusada = Proposta(
+        propostasJson['id'],
+        propostasJson['description'],
+        propostasJson['service'],
+        propostasJson['service_description'],
+        propostasJson['value'],
+        propostasJson['situation'],
+        propostasJson['user_id'],
+        propostasJson['created_at'],
+        eventoRecusado);
+    propostasRecusadas.add(propostaRecusada);
+  }
+  return {
+    "propostas_enviadas": propostasEnviadas,
+    "proposta_aceita": propostasAceitas,
+    "propostas_recusadas": propostasRecusadas
+  };
 }
 
 void createProposals(data) async {

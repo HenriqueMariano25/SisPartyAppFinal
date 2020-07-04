@@ -58,7 +58,7 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
-                    builder: (context) => EventosCliente(),
+                    builder: (context) => Eventos(),
                   ),
                 );
               },
@@ -70,16 +70,27 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
           padding: EdgeInsets.all(8.0),
           child: ListView(
             children: <Widget>[
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => EventoPropostas(widget.evento.id),
-                    ),
-                  );
-                },
-                child: Text("Ver propostas"),
-              ),
+              FutureBuilder(
+                  future: _verificar_fornecedor(),
+                  // ignore: missing_return
+                  builder: (context, snapshot) {
+                    print(snapshot.data);
+                    if (snapshot.data != true) {
+                      return RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).pushReplacement(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EventoPropostas(widget.evento.id),
+                            ),
+                          );
+                        },
+                        child: Text("Ver propostas"),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
               Text(
                 widget.evento.nome,
                 style: TextStyle(

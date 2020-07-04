@@ -11,12 +11,6 @@ class PropostaFornecedor extends StatefulWidget {
 
 class _PropostaFornecedorState extends State<PropostaFornecedor> {
   @override
-  _carregarPropostas() async {
-    Future lista = findAllProposals();
-    return lista;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
@@ -37,84 +31,47 @@ class _PropostaFornecedorState extends State<PropostaFornecedor> {
         body: TabBarView(
           children: <Widget>[
             Container(
-              child: FutureBuilder(
-                  future: _carregarPropostas(),
-                  // ignore: missing_return
-                  builder: (context, snapshot) {
-                    print(snapshot.data);
-                    final List<Proposta> propostas_enviadas =
-                        snapshot.data['propostas_enviadas'];
-                    return ListView.builder(
-                        itemCount: propostas_enviadas.length,
-                        itemBuilder: (context, index) {
-                          print(context);
-                          final Proposta proposta_enviada =
-                              propostas_enviadas[index];
-                          return Card(
-                            child: new InkWell(
-                              onTap: () {
-                                //                              print(proposta_enviada);
-                                print('id: ${proposta_enviada.id}');
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DescricaoProposta(proposta_enviada),
-                                  ),
-                                );
-                              },
-                              child: ListTile(
-                                title: Text(proposta_enviada.service),
-                                subtitle:
-                                    Text(proposta_enviada.serviceDescription),
-                              ),
-                            ),
-                          );
-                        });
-                  }),
+              child: propostaFuture('propostas_enviadas'),
             ),
             Container(
-              child: FutureBuilder(
-                  future: _carregarPropostas(),
-                  // ignore: missing_return
-                  builder: (context, snapshot) {
-                    print(snapshot.data);
-                    final List<Proposta> propostas_enviadas =
-                        snapshot.data['propostas_enviadas'];
-                    return ListView.builder(itemBuilder: (context, index) {
-                      print(context);
-                      final Proposta proposta_enviada =
-                          propostas_enviadas[index];
-                      return Card(
-                        child: ListTile(
-                          title: Text(proposta_enviada.id.toString()),
-                        ),
-                      );
-                    });
-                  }),
+              child: propostaFuture('proposta_aceita'),
             ),
             Container(
-              child: FutureBuilder(
-                  future: _carregarPropostas(),
-                  // ignore: missing_return
-                  builder: (context, snapshot) {
-                    print(snapshot.data);
-                    final List<Proposta> propostas_enviadas =
-                        snapshot.data['propostas_enviadas'];
-                    return ListView.builder(itemBuilder: (context, index) {
-                      print(context);
-                      final Proposta proposta_enviada =
-                          propostas_enviadas[index];
-                      return Card(
-                        child: ListTile(
-                          title: Text(proposta_enviada.id.toString()),
-                        ),
-                      );
-                    });
-                  }),
+              child: propostaFuture('propostas_recusadas'),
             ),
           ],
         ),
       ),
     );
   }
+}
+
+Widget propostaFuture(snapshotData) {
+  return FutureBuilder(
+      future: propostasFornecedor(),
+      // ignore: missing_return
+      builder: (context, snapshot) {
+        final List<Proposta> propostas = snapshot.data[snapshotData];
+        return ListView.builder(
+            itemCount: propostas.length,
+            itemBuilder: (context, index) {
+              print(context);
+              final Proposta proposta = propostas[index];
+              return Card(
+                child: new InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => DescricaoProposta(proposta),
+                      ),
+                    );
+                  },
+                  child: ListTile(
+                    title: Text(proposta.service),
+                    subtitle: Text(proposta.serviceDescription),
+                  ),
+                ),
+              );
+            });
+      });
 }
