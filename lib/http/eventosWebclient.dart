@@ -36,10 +36,10 @@ Future<dynamic> todosEventosCliente() async {
     },
   );
   final data = json.decode(response.body);
-  final rest = data['events_accepts'] as List;
-  final List<Evento> eventos = List();
-  for (Map<String, dynamic> eventoJson in (rest)) {
-    final Evento evento = Evento(
+  final eventsOpened = data['events_opened'] as List;
+  final List<Evento> eventosAbertos = List();
+  for (Map<String, dynamic> eventoJson in (eventsOpened)) {
+    final Evento eventoAberto = Evento(
         eventoJson['id'],
         eventoJson['name'],
         eventoJson['description'],
@@ -48,9 +48,41 @@ Future<dynamic> todosEventosCliente() async {
         eventoJson['situation'],
         eventoJson['event_type'],
         eventoJson['created_at']);
-    eventos.add(evento);
+    eventosAbertos.add(eventoAberto);
   }
-  return {"events_accepts": eventos};
+  final eventsClosed = data['events_closed'] as List;
+  final List<Evento> eventosFechados = List();
+  for (Map<String, dynamic> eventoJson in (eventsClosed)) {
+    final Evento eventoFechado = Evento(
+        eventoJson['id'],
+        eventoJson['name'],
+        eventoJson['description'],
+        eventoJson['realization_date'],
+        eventoJson['local'],
+        eventoJson['situation'],
+        eventoJson['event_type'],
+        eventoJson['created_at']);
+    eventosFechados.add(eventoFechado);
+  }
+  final eventsFinished = data['events_finished'] as List;
+  final List<Evento> eventosFinalizados = List();
+  for (Map<String, dynamic> eventoJson in (eventsFinished)) {
+    final Evento eventoFinalizado = Evento(
+        eventoJson['id'],
+        eventoJson['name'],
+        eventoJson['description'],
+        eventoJson['realization_date'],
+        eventoJson['local'],
+        eventoJson['situation'],
+        eventoJson['event_type'],
+        eventoJson['created_at']);
+    eventosFinalizados.add(eventoFinalizado);
+  }
+  return {
+    "eventos_abertos": eventosAbertos,
+    "eventos_fechados": eventosFechados,
+    "eventos_finalizados": eventosFinalizados
+  };
 }
 
 Future<dynamic> todosEventosFornecedor() async {
@@ -122,19 +154,21 @@ void criarEvento(data) async {
   );
   print(response.body);
 }
-//void creatUser() async{
-//  var json_teste = {
-//    "email":"teste108@teste.com",
-//    "password":"123456789",
-//    "password_confirmation":"123456789",
-//    "type_user":"Cliente",
-//    "name": "Henrique"
-//  };
-//  final Response response = await post(
-//    url_base + 'auth',
-//    body: json.encode(json_teste),
-//    headers:  {"Accept": "Basic application/vnd.api+json", "Content-Type":"application/json"},
-//      encoding: encoding
-//  );
-//  print(response)
-//}
+
+void closedEvent(id) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final Client client = HttpClientWithInterceptor.build(
+    interceptors: [LoggingInterceptor()],
+  );
+  final Response response = await client.post(
+    url_base + 'event/closed/',
+    headers: <String, String>{
+      'Accept': 'application/vnd.api+json',
+      'access-token': pref.getString("token"),
+      'client': pref.getString("client"),
+      'uid': pref.getString("uid")
+    },
+    body: {"id": id.toString()},
+  );
+  print(response.body);
+}

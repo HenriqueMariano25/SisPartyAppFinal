@@ -29,11 +29,12 @@ class _EventosClienteState extends State<EventosCliente> {
               Tab(text: 'Finalizados'),
             ],
           ),
-        ),
-        drawer: CustomDrawer(),
-        body: TabBarView(children: <Widget>[
-          Column(children: <Widget>[
-            RaisedButton(
+          actions: <Widget>[
+            FlatButton(
+              child: Text(
+                "Criar evento",
+                style: TextStyle(color: Colors.white, fontSize: 18.0),
+              ),
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(
@@ -41,32 +42,36 @@ class _EventosClienteState extends State<EventosCliente> {
                   ),
                 );
               },
-              child: Text("Criar evento"),
-            ),
+            )
+          ],
+        ),
+        drawer: CustomDrawer(),
+        body: TabBarView(children: <Widget>[
+          Column(children: <Widget>[
             Expanded(
               child: SizedBox(
                 child: FutureBuilder(
                     future: todosEventosCliente(),
                     builder: (context, snapshot) {
-                      final List<Evento> eventosAbertos =
-                          snapshot.data['events_accepts'];
+                      final List<Evento> eventos =
+                          snapshot.data['eventos_abertos'];
                       return ListView.builder(
-                          itemCount: eventosAbertos.length,
+                          itemCount: eventos.length,
                           itemBuilder: (context, index) {
-                            final Evento eventoAberto = eventosAbertos[index];
+                            final Evento evento = eventos[index];
                             return Card(
                               child: new InkWell(
                                 onTap: () {
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          DescricaoEvento(eventoAberto),
+                                          DescricaoEvento(evento),
                                     ),
                                   );
                                 },
                                 child: ListTile(
-                                  title: Text(eventoAberto.nome),
-                                  subtitle: Text(eventoAberto.descricao),
+                                  title: Text(evento.nome),
+                                  subtitle: Text(evento.descricao),
                                 ),
                               ),
                             );
@@ -75,8 +80,73 @@ class _EventosClienteState extends State<EventosCliente> {
               ),
             )
           ]),
-          Container(),
-          Container(),
+          Column(children: <Widget>[
+            Expanded(
+              child: SizedBox(
+                child: FutureBuilder(
+                    future: todosEventosCliente(),
+                    builder: (context, snapshot) {
+                      final List<Evento> eventos =
+                          snapshot.data['eventos_fechados'];
+                      return ListView.builder(
+                          itemCount: eventos.length,
+                          itemBuilder: (context, index) {
+                            final Evento evento = eventos[index];
+                            return Card(
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DescricaoEvento(evento),
+                                    ),
+                                  );
+                                },
+                                child: ListTile(
+                                  title: Text(evento.nome),
+                                  subtitle: Text(evento.descricao),
+                                ),
+                              ),
+                            );
+                          });
+                    }),
+              ),
+            )
+          ]),
+          Column(children: <Widget>[
+            Expanded(
+              child: SizedBox(
+                child: FutureBuilder(
+                    future: todosEventosCliente(),
+                    builder: (context, snapshot) {
+                      final List<Evento> eventos =
+                          snapshot.data['eventos_finalizados'];
+                      // if(eventos)
+                      return ListView.builder(
+                          itemCount: eventos.length,
+                          itemBuilder: (context, index) {
+                            final Evento evento = eventos[index];
+                            return Card(
+                              child: new InkWell(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DescricaoEvento(evento),
+                                    ),
+                                  );
+                                },
+                                child: ListTile(
+                                  title: Text(evento.nome),
+                                  subtitle: Text(evento.descricao),
+                                ),
+                              ),
+                            );
+                          });
+                    }),
+              ),
+            )
+          ]),
         ]),
       ),
     );

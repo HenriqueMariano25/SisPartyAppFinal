@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sisparty/http/eventosWebclient.dart';
 import 'package:sisparty/models/evento_model.dart';
+import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/screens/Evento/eventos_cliente.dart';
 import 'package:sisparty/screens/Proposta/evento_propostas.dart';
+import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 import '../Proposta/criar_proposta.dart';
 //import 'package:flutter_conditional_rendering/flutter_conditional_rendering.dart';
@@ -43,6 +46,7 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
     return Scaffold(
         appBar: AppBar(
           title: Text("Evento"),
+          centerTitle: true,
           actions: <Widget>[
             FlatButton(
               child: Text(
@@ -61,6 +65,7 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
             )
           ],
         ),
+        drawer: CustomDrawer(),
         body: Padding(
           padding: EdgeInsets.all(8.0),
           child: ListView(
@@ -104,15 +109,31 @@ class _DescricaoEventoState extends State<DescricaoEvento> {
                       child: Text("Criar proposta"),
                     );
                   } else {
-                    return RaisedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (context) => CriarProposta(widget.evento),
-                          ),
-                        );
-                      },
-                      child: Text("Excluir evento"),
+                    return Column(
+                      children: <Widget>[
+                        RaisedButton(
+                          onPressed: () {
+                            closedEvent(widget.evento.id);
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) => Eventos(),
+                              ),
+                            );
+                          },
+                          child: Text("Fechar evento"),
+                        ),
+                        RaisedButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    CriarProposta(widget.evento),
+                              ),
+                            );
+                          },
+                          child: Text("Excluir evento"),
+                        )
+                      ],
                     );
                   }
                 },
