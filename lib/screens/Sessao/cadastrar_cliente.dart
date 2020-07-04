@@ -26,10 +26,6 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
   final _addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  final _auth = FirebaseAuth.instance;
-
-  var _email = "";
-  var _password = "";
 
   Future<bool> to() async {
     SharedPreferences pref = await SharedPreferences.getInstance();

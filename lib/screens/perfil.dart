@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sisparty/screens/ContaBancaria/gerenciar_contas.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 import 'Sessao/login.dart';
@@ -7,13 +8,12 @@ import 'Sessao/login.dart';
 class Perfil extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Perfil"),
       ),
       drawer: CustomDrawer(),
-      body: Column(
+      body: ListView(
         children: <Widget>[
           Text("Saldo: "),
           Text("Nome: "),
@@ -27,7 +27,13 @@ class Perfil extends StatelessWidget {
             child: Text("Sacar"),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => GerenciarContasBancarias(),
+                ),
+              );
+            },
             child: Text("Gerencias contas bancarias"),
           ),
           RaisedButton(
@@ -36,17 +42,16 @@ class Perfil extends StatelessWidget {
           ),
           RaisedButton(
             onPressed: () async {
-                SharedPreferences pref = await SharedPreferences.getInstance();
-                pref.setString("autheticated", "true");
-                Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ),
-                );
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              pref.setString("autheticated", "true");
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => Login(),
+                ),
+              );
             },
             child: Text("Sair"),
           ),
-
         ],
       ),
     );

@@ -150,37 +150,5 @@ class _EventosClienteState extends State<EventosCliente> {
         ]),
       ),
     );
-    /* Scaffold(
-      appBar: AppBar(
-        title: Text("Eventos"),
-      ),
-      drawer: CustomDrawer(),
-      body: FutureBuilder<List<Evento>>(
-        future: findAllEventos(),
-        builder: (context, snapshot) {
-          final List<Evento> eventos = snapshot.data;
-          return ListView.builder(itemBuilder: (context, index) {
-            final Evento evento = eventos[index];
-            return Card(
-              child: new InkWell(
-                onTap: () {
-                  print('clicado: ${evento.nome}');
-                  print('id: ${evento.id}');
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => DescricaoEvento(evento),
-                    ),
-                  );
-                  findEvento(evento.id);
-                },
-                child: ListTile(
-                  title: Text(evento.nome),
-                ),
-              ),
-            );
-          });
-        },
-      ),
-    ); */
   }
 }
