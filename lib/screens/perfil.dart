@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sisparty/screens/ContaBancaria/gerenciar_contas.dart';
+import 'package:sisparty/screens/Sessao/alterar_senha.dart';
 import 'package:sisparty/screens/screen_utils/custom_drawer.dart';
 
 import 'Sessao/login.dart';
@@ -15,6 +16,12 @@ class Perfil extends StatelessWidget {
       drawer: CustomDrawer(),
       body: ListView(
         children: <Widget>[
+          Container(
+            child: Image(
+              image: NetworkImage(
+                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+            ),
+          ),
           Text("Saldo: "),
           Text("Nome: "),
           Text("Email: "),
@@ -37,7 +44,13 @@ class Perfil extends StatelessWidget {
             child: Text("Gerencias contas bancarias"),
           ),
           RaisedButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                MaterialPageRoute(
+                  builder: (context) => AlterarSenha(),
+                ),
+              );
+            },
             child: Text("Alterar senha"),
           ),
           RaisedButton(

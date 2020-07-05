@@ -139,49 +139,7 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
     } catch (e) {
       print(e);
     }
-//    SharedPreferences pref = await SharedPreferences.getInstance();
-//    print(pref.getString("teste"));
-//    print(load().toString());
-//    final _dio = Dio(BaseOptions(baseUrl: BASEURL));
-//
-//    _dio.options.headers['Accept'] = "application/vnd.api+json";
-//    _dio.options.headers['Content-Type'] = "application/json";
-//    var response = await _dio.post('auth', data: data);
-//    print(response.headers["access-token"]);
   }
-//    responseInterceptor(Response response) {
-//      dynamic responseInterceptor(Response options) async {
-//        if (options.headers.value("verifyToken") != null) {
-//          //if the header is present, then compare it with the Shared Prefs key
-//          SharedPreferences prefs = await SharedPreferences.getInstance();
-//          var verifyToken = prefs.get("VerifyToken");
-//
-//          // if the value is the same as the header, continue with the request
-//          if (options.headers.value("verifyToken") == verifyToken) {
-//            return options;
-//          }
-//        }
-//
-//      }
-
-//    _dio.options.headers['Accept'] = "application/vnd.api+json";
-//    final resp = await  _dio.get('/events');
-//
-//    _formKey.currentState.save();
-//
-//    try {
-//      print(_email);
-//      print(_password);
-//      await _auth.createUserWithEmailAndPassword(
-//          email: _email,
-//          password: _password);
-//      Navigator.of(context).pushReplacement(
-//          MaterialPageRoute(
-//              builder: (context) => Login()));
-//    } catch (e) {
-//      print(e);
-//    }
-//  }
 }
 
 Widget _buildTextField(String labelText, TextInputType keyBoard, bool teste,

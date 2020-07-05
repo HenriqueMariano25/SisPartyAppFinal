@@ -22,7 +22,6 @@ class LoggingInterceptor implements InterceptorContract {
   }
 }
 
-
 void criarUsuario(data) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   final Client client = HttpClientWithInterceptor.build(
@@ -43,7 +42,7 @@ void criarUsuario(data) async {
   pref.setString("authenticated", "true");
 }
 
-Future<dynamic> entrar(data) async{
+Future<dynamic> entrar(data) async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   final Client client = HttpClientWithInterceptor.build(
     interceptors: [LoggingInterceptor()],
@@ -51,7 +50,7 @@ Future<dynamic> entrar(data) async{
   final Response response = await client.post(url_base + 'auth/sign_in',
       headers: <String, String>{'Accept': 'application/vnd.api+json'},
       body: data);
-  if(response.statusCode == 200){
+  if (response.statusCode == 200) {
     final dataJson = json.decode(response.body);
     var token = response.headers['access-token'];
     var cliente_headers = response.headers['client'];
@@ -62,11 +61,12 @@ Future<dynamic> entrar(data) async{
     pref.setString("type_user", dataJson["data"]["type_user"]);
     pref.setString("id", dataJson["data"]["id"].toString());
     pref.setString("authenticated", "true");
-    final res_return = {'result':true};
+    final res_return = {'result': true};
     return res_return;
-  }else{
-    final res_return = {'result':false};
+  } else {
+    final res_return = {'result': false};
     return res_return;
   }
-
 }
+
+void alterarSenha(data) {}
