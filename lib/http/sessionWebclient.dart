@@ -61,7 +61,20 @@ Future<dynamic> entrar(data) async {
     pref.setString("type_user", dataJson["data"]["type_user"]);
     pref.setString("id", dataJson["data"]["id"].toString());
     pref.setString("authenticated", "true");
-    final res_return = {'result': true};
+    // print(response.body);
+    final data = json.decode(response.body);
+    // final user = data['data'] as List;
+    // print(data['data']);
+    // final List infosUser = List();
+    // for (Map<String, dynamic> infosUserJson in (infosUser)) {
+    // final Evento eventoEnviado = Evento(
+    //   infosUserJson['id'],
+    //   infosUserJson['email'],
+    //   infosUserJson['image']['url'],
+    //   infosUserJson['type_user'],
+    //   infosUserJson['balance'],
+    // );
+    final res_return = {'result': true, 'response': data['data']};
     return res_return;
   } else {
     final res_return = {'result': false};
@@ -70,3 +83,20 @@ Future<dynamic> entrar(data) async {
 }
 
 void alterarSenha(data) {}
+
+Future uploadImageUser(data) async {
+  SharedPreferences pref = await SharedPreferences.getInstance();
+  final Client client = HttpClientWithInterceptor.build(
+    interceptors: [LoggingInterceptor()],
+  );
+  final Response response = await client
+      .post(url_base + 'profile/upload_image_user', headers: <String, String>{
+    'Accept': 'application/vnd.api+json',
+    'access-token': pref.getString("token"),
+    'client': pref.getString("client"),
+    'uid': pref.getString("uid")
+  }, body: {
+    "photo": data
+  });
+  print(response.body);
+}

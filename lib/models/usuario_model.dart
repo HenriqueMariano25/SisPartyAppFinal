@@ -1,4 +1,17 @@
 class Usuario {
+  final String nome;
+  final String email;
+  final String saldo;
+  final String imagem;
+  final String tipoUsuario;
+  final String token;
+  final String cliente;
+
+  Usuario(this.nome, this.email, this.saldo, this.imagem, this.tipoUsuario,
+      this.token, this.cliente);
+}
+
+/* class Usuario {
   int id;
   String email;
   String provider;
@@ -47,3 +60,4 @@ class Usuario {
   }
 
 }
+ */

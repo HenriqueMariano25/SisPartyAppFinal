@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
 import 'package:sisparty/models/evento_model.dart';
 import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/utils/constants.dart';
@@ -108,7 +106,8 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
                               _confirmPasswordController.text,
 //                          "address": _addressController.text,
 //                          "cpfcnpj": _cpfcnpjController.text,
-                          "type_user": "Cliente"
+                          "type_user": "Cliente",
+                          "balance": "0.0"
                         };
                         _entrar(userData);
                       }
@@ -133,7 +132,7 @@ class _CadastrarClienteState extends State<CadastrarCliente> {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => Eventos(),
+          builder: (context) => Login(),
         ),
       );
     } catch (e) {

@@ -3,7 +3,6 @@ import 'package:sisparty/http/sessionWebclient.dart';
 import 'package:sisparty/models/evento_model.dart';
 import 'package:sisparty/screens/Evento/eventos.dart';
 import 'package:sisparty/screens/Sessao/escolher_cadastro.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sisparty/screens/Evento/eventos_fornecedor.dart';
 import '../Evento/eventos_cliente.dart';
 import 'login.dart';
@@ -98,7 +97,8 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
                               _confirmPasswordController.text,
 //                          "address": _addressController.text,
 //                          "cpfcnpj": _cpfcnpjController.text,
-                          "type_user": "Fornecedor"
+                          "type_user": "Fornecedor",
+                          "balance": "0.0"
                         };
                         _entrar(userData);
                       }
@@ -123,7 +123,7 @@ class _CadastrarFornecedorState extends State<CadastrarFornecedor> {
       criarUsuario(data);
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (context) => Eventos(),
+          builder: (context) => Login(),
         ),
       );
     } catch (e) {
